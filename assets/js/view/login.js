@@ -1,7 +1,7 @@
 function main() {
-  console.log("TODO complete me!");
   var loginButton = document.getElementById("login");
   loginButton.addEventListener("click", function() {
+    // TODO validate input before atempting logging in
     var serverUrl = document.getElementById("serverurl").value;
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
