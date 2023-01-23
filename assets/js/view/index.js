@@ -1,6 +1,17 @@
 function buildAppsList(apps) {
-  // TODO build table with all apps
-  return "there are apps here";
+  var outlet = "<table><tr><th>Name</th><th>Delete?</th></tr>";
+
+  for (var i = 0; i < apps.length; i++) {
+    var app = apps[i];
+    var authKey = app["auth_key"];
+    var linkHref = `./app.html?app_auth_key=${authKey}`;
+    var linkInner = app["name"];
+    var link = `<a href="${linkHref}">${linkInner}</a>`
+    outlet += `<tr><td>${link}</td><td>delete</td></tr>`;
+  }
+
+  outlet += "</table>";
+  return outlet;
 }
 
 function main() {
