@@ -1,5 +1,6 @@
 const DEFAULT_API_URL = "http://baas.liberdade.bsb.br";
 const SERVER_API_URL_KEY = "server_api_url";
+const CLIENT_AUTH_KEY = "auth_key";
 
 /**
  * @returns server URL. Defaults to `DEFAULT_API_URL`
@@ -19,7 +20,13 @@ function setServerUrl(url) {
  * Checks if a client is logged in
  */
 function isLoggedIn() {
-  // TODO complete me!
-  return false;
+  return !!localStorage.getItem(CLIENT_AUTH_KEY);
+}
+
+/**
+ * @param authKey client's auth key
+ */
+function auth(authKey) {
+  return localStorage.setItem(CLIENT_AUTH_KEY, authKey);
 }
 
