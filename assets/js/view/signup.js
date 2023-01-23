@@ -1,10 +1,18 @@
 function main() {
   var signupButton = document.getElementById("signup");
   signupButton.addEventListener("click", function() {
-    // TODO validate input before signing up
     var serverUrl = document.getElementById("serverurl").value || DEFAULT_API_URL;
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
+    var passwordAgain = document.getElementById("passwordagain").value;
+
+    // validating input
+    if ((password !== passwordAgain) || (!isEmail(email))) {
+      signupButton.innerHTML = "Invalid data, try again";
+      return;
+    }
+
+    // atempting login
     signupButton.innerHTML = "Logging in...";
     signUp(serverUrl, email, password, function(result) {
       try {

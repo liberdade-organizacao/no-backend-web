@@ -30,3 +30,10 @@ function auth(authKey) {
   return localStorage.setItem(CLIENT_AUTH_KEY, authKey);
 }
 
+/**
+ * Undo authorization
+ */
+function unauth() {
+  return localStorage.setItem(CLIENT_AUTH_KEY, "");
+}
+
