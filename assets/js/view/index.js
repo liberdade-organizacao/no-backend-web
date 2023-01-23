@@ -7,12 +7,15 @@ function main() {
   }
 
   // setting up main dashboard
-  // TODO complete me!
-  // TODO remove this reference to the log out button
-  logoutButton = document.getElementById("logout");
-  logoutButton.addEventListener("click", function() {
-    unauth();
-    location.href = "./login.html";
+  const serverUrl = getServerUrl();
+  const authKey = getAuthKey();
+  getApps(serverUrl, authKey, function(result) {
+    if (!!result.error) {
+      alert(result.error);
+      return;
+    }
+
+    console.log(result["apps"]);
   });
 }
 

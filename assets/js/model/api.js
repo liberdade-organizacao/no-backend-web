@@ -1,20 +1,17 @@
 /**
- * Generates a standard auth POST request to the server
- * @param url request URL
- * @param email client email
- * @param password client password
- * @param callback function to be called with request response
+ * Generic POST request
+ * @param url URL to be requested
+ * @param body JSON object to be sent (will be stringified)
+ * @param callback function to be called to deal with result
  */
-function postAuth(url, email, password, callback) {
+function postRequest(url, body, callback) {
+  console.log(body);
   return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
+    body: JSON.stringify(body),
   }).then((response) => {
     return response.json();
   }).then((data) => {
@@ -22,6 +19,20 @@ function postAuth(url, email, password, callback) {
   }).catch((error) => {
     return callback({error: error});
   });
+}
+
+/**
+ * Generates a standard auth POST request to the server
+ * @param url request URL
+ * @param email client email
+ * @param password client password
+ * @param callback function to be called with request response
+ */
+function postAuth(url, email, password, callback) {
+  return postRequest(url, {
+    email: email,
+    password: password,
+  }, callback);
 }
 
 /**
@@ -45,5 +56,25 @@ function signUp(serverUrl, email, password, callback) {
  */
 function logIn(serverUrl, email, password, callback) {
   return postAuth(`${serverUrl}/clients/login`, email, password, callback);
+}
+
+/**
+ * Creates a new app
+ * @param authKey client's auth key
+ * @param appName app's name
+ * @param callback function to be called to deal with result
+ */
+function createApp(serverUrl, authKey, appName, callback) {
+  return postRequest(`${serverUrl}/apps`, {
+    "auth_key": authKey,
+    "name": appName,
+  }, callback);
+}
+
+/**
+ * Gets all apps a client is allowed to manage
+ */
+function getApps(serverUrl, authKey, callback) {
+  return callback({error: "Not implemented yet!"});
 }
 

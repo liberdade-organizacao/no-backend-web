@@ -37,3 +37,10 @@ function unauth() {
   return localStorage.setItem(CLIENT_AUTH_KEY, "");
 }
 
+/**
+ * @returns the logged in client auth key
+ */
+function getAuthKey() {
+  return localStorage.getItem(CLIENT_AUTH_KEY);
+}
+
