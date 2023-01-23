@@ -11,7 +11,10 @@ function main() {
         if (!!result.error) {
 	  throw result.error;
 	} else {
-	  // TODO sign up
+	  signupButton.innerHTML = "Redirecting to main page...";
+	  setServerUrl(serverUrl);
+	  auth(result["auth_key"]);
+	  location.href = "./index.html";
 	}
       } catch (error) {
         signupButton.innerHTML = "Try again";
