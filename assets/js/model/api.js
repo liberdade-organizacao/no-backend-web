@@ -5,7 +5,6 @@
  * @param callback function to be called to deal with result
  */
 function postRequest(url, body, callback) {
-  console.log(body);
   return fetch(url, {
     method: "POST",
     headers: {
@@ -75,6 +74,12 @@ function createApp(serverUrl, authKey, appName, callback) {
  * Gets all apps a client is allowed to manage
  */
 function getApps(serverUrl, authKey, callback) {
-  return callback({error: "Not implemented yet!"});
+  return fetch(`${serverUrl}/apps?auth_key=${authKey}`).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    callback({error: error})
+  });
 }
 
