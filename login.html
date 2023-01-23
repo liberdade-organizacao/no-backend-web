@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Backend-as-a-Service Web Interface</title>
+    <link id="pagestyle" rel="stylesheet" href="./assets/css/mini-nord.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>
+        <a href="./index.html">
+	    Backend-as-a-Service Web Interface
+	</a>
+    </h1>
+    <div>
+        <form>
+	    <fieldset>
+	        <legend>Log In</legend>
+		<label for="serverurl">Server</label>
+		<input type="text" 
+		       id="serverurl" 
+		       placeholder="http://baas.liberdade.bsb.br"/>
+		<br/>
+		<label for="email">E-mail</label>
+		<input type="text" id="email"/>
+		<br/>
+		<label for="password">Password</label>
+		<input type="password" id="password">
+		<br/>
+		<button type="button" name="button" id="login">
+                    Log In
+		</button>
+	    </fieldset>
+	</form>
+	<a href="./signup.html">Sign up instead</a>
+    </div>
+
+    <script src="./assets/js/model/storage.js" charset="utf-8"></script>
+    <script src="./assets/js/model/api.js" charset="utf-8"></script>
+    <script src="./assets/js/view/login.js" charset="utf-8"></script>
+    <script>
+        main()
+    </script>
+</body>
+</html>
