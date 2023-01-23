@@ -64,10 +64,12 @@ function logIn(serverUrl, email, password, callback) {
  * @param callback function to be called to deal with result
  */
 function createApp(serverUrl, authKey, appName, callback) {
-  return postRequest(`${serverUrl}/apps`, {
+  const body = {
     "auth_key": authKey,
-    "name": appName,
-  }, callback);
+    "app_name": appName,
+  };
+  console.log(body);
+  return postRequest(`${serverUrl}/apps`, body, callback);
 }
 
 /**
