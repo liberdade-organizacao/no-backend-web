@@ -16,8 +16,16 @@
 
     <div id="settings">
         <h1>Settings</h1>
-	<!-- TODO let users change their password -->
-	<!-- TODO let users sign out -->
+	<h2>Change Password</h2>
+	<form>
+	    <input type="password" id="old-password" placeholder="Old password"/><br/>
+	    <input type="password" id="new-password" placeholder="New password"/><br/>
+	    <input type="password" id="new-password-again" placeholder="New password again"/><br/>
+	    <button type="button" name="button" id="change-password-button">Change password</button>
+	</form>
+
+        <h2>Log Out</h2>
+	<button type="button" id="logout-button">Log Out</button>
 	<!-- TODO let users delete their accounts -->
     </div>
 

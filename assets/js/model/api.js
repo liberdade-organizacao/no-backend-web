@@ -68,7 +68,6 @@ function createApp(serverUrl, authKey, appName, callback) {
     "auth_key": authKey,
     "app_name": appName,
   };
-  console.log(body);
   return postRequest(`${serverUrl}/apps`, body, callback);
 }
 
@@ -83,5 +82,22 @@ function getApps(serverUrl, authKey, callback) {
   }).catch((error) => {
     callback({error: error})
   });
+}
+
+/**
+ * Atemps to change the client's password.
+ * This function does not verify if the new password is correct as intended!
+ * @param serverUrl server URL
+ * @param authKey client auth key
+ * @param oldPassword old password
+ * @param newPassword new password
+ * @param callback function to be called to deal with result
+ */
+function changePassword(serverUrl, authKey, oldPassword, newPassword, callback) {
+  return postRequest(`${serverUrl}/clients/password`, {
+    "auth_key": authKey,
+    "old_password": oldPassword,
+    "new_password": newPassword
+  }, callback);
 }
 
