@@ -1,7 +1,7 @@
 function main() {
   // Do not load page is the user is not logged in
   if (!isLoggedIn()) {
-    location.href = "./index.html";
+    location.href = "./login.html";
     return;
   }
 
@@ -36,7 +36,24 @@ function main() {
   var logoutButton = document.getElementById("logout-button");
   logoutButton.addEventListener("click", function() {
     unauth();
-    location.href = "./index.html";
+    location.href = "./login.html";
+  });
+
+  // Delete account logic
+  var deleteAccountButton = document.getElementById("delete-account-button");
+  deleteAccountButton.addEventListener("click", function() {
+    deleteAccountButton.innerHTML = "Deleting account...";
+    const password = document.getElementById("password").value;
+    deleteAccount(serverUrl, clientAuthKey, password, function(result) {
+      if (!!result.error) {
+        deleteAccountButton.innerHTML = "Failed to delete account. Try again.";
+	return;
+      }
+
+      deleteAccountButton.innerHTML = "Account deleted";
+      unauth();
+      location.href = "./login.html";
+    });
   });
 }
 

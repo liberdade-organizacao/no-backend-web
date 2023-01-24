@@ -101,3 +101,26 @@ function changePassword(serverUrl, authKey, oldPassword, newPassword, callback) 
   }, callback);
 }
 
+/**
+ * Atemps an account deletion
+ * @param authKey client's auth key
+ * @param password client's password
+ * @param callback function to be called to deal with the result
+ */
+function deleteAccount(serverUrl, authKey, password, callback) {
+  return fetch(`${serverUrl}/clients`, {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      "auth_key": authKey,
+      "password": password
+    })
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
