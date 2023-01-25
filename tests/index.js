@@ -1,3 +1,9 @@
+const DEFAULT_ACTION = `
+function main(param)
+  return "Hello " .. param .. "!"
+end
+`;
+
 function randomString(length) {
   var result           = '';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -45,6 +51,7 @@ function main() {
         console.log("Failed to create client");
 	return;
       }
+      var clientAuthKey = signUpResult["auth_key"];
       var numberOfApps = 2 + 10 * Math.random();
       for (var i2 = 0; i2 < numberOfApps; i2++) {
         createApp(serverUrl, signUpResult["auth_key"], randomString(3 + 5 * Math.random()), function(appCreationResult) {
@@ -63,6 +70,26 @@ function main() {
 	    createUser(serverUrl, appAuthKey, userEmail, randomString(1 + 10 * Math.random()), function(userCreationResult) {
 	      console.log("--- # creating user");
 	      console.log(userCreationResult);
+	      var userAuthKey = userCreationResult["auth_key"];
+	      var numberOfFiles = 10 + 10 * Math.random();
+	      for (var i5 = 0; i5 < numberOfFiles; i5++) {
+		var filename = `file-${randomString(15)}.txt`;
+		var contents = "this is just a test!";
+		uploadFile(serverUrl, userAuthKey, filename, contents, function(fileUploadResult) {
+		  console.log("--- # uploading file");
+		  console.log(fileUploadResult);
+		});
+	      }
+	    });
+	  }
+
+          var numberOfActions = 1 + 2 * Math.random();
+	  for (var i4 = 0; i4 < numberOfActions; i4++) {
+	    var actionName = `L${randomString(5)}.lua`;
+	    var actionScript = DEFAULT_ACTION;
+	    uploadAction(serverUrl, clientAuthKey, appAuthKey, actionName, actionScript, function(actionCreationResult) {
+	      console.log("--- creating action");
+	      console.log(actionCreationResult);
 	    });
 	  }
 	});
