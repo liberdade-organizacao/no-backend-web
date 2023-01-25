@@ -34,7 +34,7 @@ function auth(authKey) {
  * Undo authorization
  */
 function unauth() {
-  return localStorage.setItem(CLIENT_AUTH_KEY, "");
+  return localStorage.clear();
 }
 
 /**
@@ -42,5 +42,15 @@ function unauth() {
  */
 function getAuthKey() {
   return localStorage.getItem(CLIENT_AUTH_KEY);
+}
+
+/**
+ * Gets a URL search param
+ * @param param the param key
+ * @returns the param value, or an empty string if the param is not present
+ */
+function getUrlSearchParam(param) {
+  const urlParams = new URL(window.location.toLocaleString()).searchParams;
+  return urlParams.get(param);
 }
 

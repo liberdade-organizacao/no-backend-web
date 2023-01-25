@@ -124,3 +124,96 @@ function deleteAccount(serverUrl, authKey, password, callback) {
   });
 }
 
+/**
+ * Creates a new user in an app
+ * @param serverUrl server URL
+ * @param appAuthKey app's auth key
+ * @param userEmail user's email
+ * @param userPassword user's password
+ * @param callback function to be called to deal with user creation result
+ */
+function createUser(serverUrl, appAuthKey, userEmail, userPassword, callback) {
+  return postRequest(`${serverUrl}/users/signup`, {
+    "app_auth_key": appAuthKey,
+    "email": userEmail,
+    "password": userPassword
+  }, callback);
+}
+
+/**
+ * Uploads a file to a user's storage
+ * @param serverUrl server URL
+ * @param userAuthKey user's auth key
+ * @param filename file name
+ * @param contents file contents
+ * @param callback function to deal with file upload result
+ */
+function uploadFile(serverUrl, userAuthKey, filename, contents, callback) {
+  return fetch(`${serverUrl}/users/files`, {
+    method: "POST",
+    headers: {
+      "X-USER-AUTH-KEY": userAuthKey,
+      "X-FILENAME": filename
+    },
+    body: contents
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
+/**
+ * Creates a new action
+ * @parm serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param actionName action name
+ * @param actionScript action script
+ * @param callback function to be called to deal with action creation result
+ */
+function uploadAction(serverUrl, clientAuthKey, appAuthKey, actionName, actionScript, callback) {
+  return postRequest(`${serverUrl}/actions`, {
+    "client_auth_key": clientAuthKey,
+    "app_auth_key": appAuthKey,
+    "action_name": actionName,
+    "action_content": actionScript
+  }, callback);
+}
+
+/**
+ * List an app's files
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param callback function to be called to deal with the app's files
+ */
+function listAppFiles(serverUrl, clientAuthKey, appAuthKey, callback) {
+  return fetch(`${serverUrl}/apps/files/list?client_auth_key=${clientAuthKey}&app_auth_key=${appAuthKey}`).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
+/**
+ * List an app's actions
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param callback function to be called to deal with the app's actions
+ */
+function listAppActions(serverUrl, clientAuthKey, appAuthKey, callback) {
+  return fetch(`${serverUrl}/actions/list?client_auth_key=${clientAuthKey}&app_auth_key=${appAuthKey}`).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
