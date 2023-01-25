@@ -1,3 +1,18 @@
+function buildFileList(files) {
+  var outlet = "<table><tr><th>File name</th><th>User Email</th><th>Delete?</th></tr>";
+
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var filename = file["filepath"].split("/")[2];
+    var userEmail = file["filepath"].split("/")[1];
+    var row = `<tr><td>${filename}</td><td>${userEmail}</td><td>Delete</td></tr>`;
+    outlet += row;
+  }
+
+  outlet += "</table>";
+  return outlet;
+}
+
 function main() {
   /// VALIDATING PARAMETERS
   if (!isLoggedIn()) {
@@ -51,10 +66,9 @@ function main() {
       return;
     }
 
-    // TODO list the app's files
-    document.getElementById("app-files").innerHTML = "<p>There are files, just not here</p>";
+    document.getElementById("app-files").innerHTML = buildFileList(result["files"]);
   });
 
   // listing managers
-  document.getElementById("app-manageres").innerHTML = "<p>/!\\ MEN AT WORK /!\\</p>";
+  document.getElementById("app-managers").innerHTML = "<p>/!\\ MEN AT WORK /!\\</p>";
 }
