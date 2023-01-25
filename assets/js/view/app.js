@@ -71,4 +71,18 @@ function main() {
 
   // listing managers
   document.getElementById("app-managers").innerHTML = "<p>/!\\ MEN AT WORK /!\\</p>";
+
+  /// CALLBACKS
+  document.getElementById("delete-app-button").addEventListener("click", function() {
+    deleteApp(serverUrl, clientAuthKey, appAuthKey, function(result) {
+      if (!!result.error) {
+        alert("Failed to delete app!");
+	return;
+      }
+
+      alert("Successfully deleted app!");
+      location.href = "./index.html";
+      return;
+    });
+  });
 }
