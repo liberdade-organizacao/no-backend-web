@@ -1,3 +1,16 @@
+function deleteAppCallback(appAuthKey) {
+  deleteApp(getServerUrl(), getAuthKey(), appAuthKey, function(result) {
+    if (!!result.error) {
+      alert("Failed to delete app!");
+      return;
+    }
+
+    alert("Successfully deleted app");
+    location.reload();
+    return;
+  });
+}
+
 function buildAppsList(apps) {
   var outlet = "<table><tr><th>Name</th><th>Delete?</th></tr>";
 
@@ -6,8 +19,9 @@ function buildAppsList(apps) {
     var authKey = app["auth_key"];
     var linkHref = `./app.html?app_auth_key=${authKey}`;
     var linkInner = app["name"];
-    var link = `<a href="${linkHref}">${linkInner}</a>`
-    outlet += `<tr><td>${link}</td><td>delete</td></tr>`;
+    var link = `<a href="${linkHref}">${linkInner}</a>`;
+    var deleteButton = `<button onclick="deleteAppCallback('${authKey}')">Delete</button>`;
+    outlet += `<tr><td>${link}</td><td>${deleteButton}</td></tr>`;
   }
 
   outlet += "</table>";

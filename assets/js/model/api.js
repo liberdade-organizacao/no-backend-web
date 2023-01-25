@@ -21,6 +21,28 @@ function postRequest(url, body, callback) {
 }
 
 /**
+ * Generic DELETE request
+ * @param url URL to be requested
+ * @param body JSON object to be sent (will be stringified)
+ * @param callback function to be called to deal with result
+ */
+function deleteRequest(url, body, callback) {
+  return fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
+/**
  * Generates a standard auth POST request to the server
  * @param url request URL
  * @param email client email
@@ -108,20 +130,10 @@ function changePassword(serverUrl, authKey, oldPassword, newPassword, callback) 
  * @param callback function to be called to deal with the result
  */
 function deleteAccount(serverUrl, authKey, password, callback) {
-  return fetch(`${serverUrl}/clients`, {
-    method: "DELETE",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      "auth_key": authKey,
-      "password": password
-    })
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    return callback(data);
-  }).catch((error) => {
-    return callback({error: error});
-  });
+  return deleteRequest(`${serverUrl}/clients`, {
+    "auth_key": authKey,
+    "password": password
+  }, callback);
 }
 
 /**
@@ -215,5 +227,19 @@ function listAppActions(serverUrl, clientAuthKey, appAuthKey, callback) {
   }).catch((error) => {
     return callback({error: error});
   });
+}
+
+/**
+ * Atemps to delete an app
+ * @param serverUrl server URL
+ * @param clientAuthKey client auth key
+ * @param appAuthKey app auth key
+ * @param callback function to be called to deal with app deletion result
+ */
+function deleteApp(serverUrl, clientAuthKey, appAuthKey, callback) {
+  return deleteRequest(`${serverUrl}/apps`, {
+    "client_auth_key": clientAuthKey,
+    "app_auth_key": appAuthKey,
+  }, callback);
 }
 
