@@ -17,7 +17,7 @@ function buildAppsList(apps) {
   for (var i = 0; i < apps.length; i++) {
     var app = apps[i];
     var authKey = app["auth_key"];
-    var linkHref = `./app.html?app_auth_key=${authKey}`;
+    var linkHref = `./app/index.html?app_auth_key=${authKey}`;
     var linkInner = app["name"];
     var link = `<a href="${linkHref}">${linkInner}</a>`;
     var deleteButton = `<button onclick="deleteAppCallback('${authKey}')">Delete</button>`;

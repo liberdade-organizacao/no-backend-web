@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Backend-as-a-Service Web Interface</title>
+    <link id="pagestyle" rel="stylesheet" href="../assets/css/mini-nord.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <header class="sticky">
+        <a href="../index.html" class="logo">BaaS</a>
+        <a href="../settings.html" class="button">Settings</a>
+    </header>
+
+    <h1 id="app-name">Managers</h1>
+    
+    <h2>Invite to app</h2>
+    <form><fieldset>
+         <label for="manager-email">Email</label>
+	 <input type="text" name="manager-email" id="manager-email"/>
+	 <br/>
+	 <label for="manager-role">Role</label>
+	 <select name="manager-role" id="manager-role">
+	     <option value="contributor">Contributor</option>
+	     <option value="admin">Admin</option>
+	 </select>
+	 </br>
+	 <button type="button" id="invite-manager-button">Invite</button>
+    </fieldset></form>
+
+    <h2>List of Managers</h2>
+    <div id="app-managers"></div>
+
+    <script src="../assets/js/model/storage.js" charset="utf-8"></script>
+    <script src="../assets/js/model/api.js" charset="utf-8"></script>
+    <script src="../assets/js/view/app/managers.js" charset="utf-8"></script>
+    <script>
+        main()
+    </script>
+</body>
+</html>

@@ -16,7 +16,7 @@ function buildFileList(files) {
 function main() {
   /// VALIDATING PARAMETERS
   if (!isLoggedIn()) {
-    location.href = "./login.html";
+    location.href = "../login.html";
     return;
   }
 
@@ -28,6 +28,9 @@ function main() {
   /// POPULATING PAGE
   const serverUrl = getServerUrl();
   const clientAuthKey = getAuthKey();
+
+  // Updating links
+  document.getElementById("managers-link").href = `./managers.html?app_auth_key=${appAuthKey}`;
 
   // listing users
   // TODO complete me!
@@ -68,9 +71,6 @@ function main() {
 
     document.getElementById("app-files").innerHTML = buildFileList(result["files"]);
   });
-
-  // listing managers
-  document.getElementById("app-managers").innerHTML = "<p>/!\\ MEN AT WORK /!\\</p>";
 
   /// CALLBACKS
   document.getElementById("delete-app-button").addEventListener("click", function() {

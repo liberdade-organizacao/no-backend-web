@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Backend-as-a-Service Web Interface</title>
-    <link id="pagestyle" rel="stylesheet" href="./assets/css/mini-nord.min.css">
-    <link rel="stylesheet" href="./assets/css/main.css">
+    <link id="pagestyle" rel="stylesheet" href="../assets/css/mini-nord.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <header class="sticky">
-        <a href="./index.html" class="logo">BaaS</a>
-        <a href="./settings.html" class="button">Settings</a>
+        <a href="../index.html" class="logo">BaaS</a>
+        <a href="../settings.html" class="button">Settings</a>
     </header>
 
     <h1 id="app-name">App Name</h1>
@@ -18,7 +18,7 @@
         <li><a href="#users-section">Users</a></li>
         <li><a href="#actions-section">Actions</a></li>
         <li><a href="#files-section">Files</a></li>
-        <li><a href="#managers-section">Managers</a></li>
+        <li><a href="./managers.html" id="managers-link">Managers</a></li>
     </ul>
 
     <a id="users-section"></a>
@@ -34,17 +34,13 @@
     <h2>Files</h2>
     <div id="app-files"></div>
 
-    <a id="managers-section"></a>
-    <h2>Managers</h2>
-    <div id="app-managers"></div>
-
     <a id="danger-section"></a>
     <h2>Danger Section</h2>
     <button class="secondary" id="delete-app-button">Delete App</button>
 
-    <script src="./assets/js/model/storage.js" charset="utf-8"></script>
-    <script src="./assets/js/model/api.js" charset="utf-8"></script>
-    <script src="./assets/js/view/app.js" charset="utf-8"></script>
+    <script src="../assets/js/model/storage.js" charset="utf-8"></script>
+    <script src="../assets/js/model/api.js" charset="utf-8"></script>
+    <script src="../assets/js/view/app/index.js" charset="utf-8"></script>
     <script>
         main()
     </script>
