@@ -40,5 +40,21 @@ function main() {
     
     document.getElementById("app-managers").innerHTML = contents;
   });
+
+  var inviteManagerButton = document.getElementById("invite-manager-button");
+  inviteManagerButton.addEventListener("click", function() {
+    inviteManagerButton.innerHTML = "Inviting...";
+    const inviteeEmail = document.getElementById("manager-email").value;
+    const role = document.getElementById("manager-role").value;
+    inviteManager(serverUrl, clientAuthKey, appAuthKey, inviteeEmail, role, function(result) {
+      if (!!result.error) {
+        inviteManagerButton.innerHTML = "Failed to invite client. Try again.";
+	return;
+      }
+
+      inviteManagerButton.innerHTML = "Done!";
+      return location.reload();
+    });
+  });
 }
 

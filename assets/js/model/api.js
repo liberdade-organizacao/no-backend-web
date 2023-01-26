@@ -247,6 +247,28 @@ function listAppManagers(serverUrl, clientAuthKey, appAuthKey, callback) {
 }
 
 /**
+ * Atempts to invite a manager to an app
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param inviteeEmail invited client's e-mail
+ * @param role invited client's role (should be either "contributor" or "admin")
+ * @param callback function to be called to deal with this call's result
+ */
+function inviteManager(serverUrl, clientAuthKey, appAuthKey, inviteeEmail, role, callback) {
+  if (role !== "contributor" && role !== "admin") {
+    return callback({error: "Invalid role"});
+  }
+
+  return postRequest(`${serverUrl}/apps/invite`, {
+    "inviter_auth_key": clientAuthKey,
+    "app_auth_key": appAuthKey,
+    "invitee_email": inviteeEmail,
+    "invitee_role": role
+  }, callback);
+}
+
+/**
  * Atemps to delete an app
  * @param serverUrl server URL
  * @param clientAuthKey client auth key
