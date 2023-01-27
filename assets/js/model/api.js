@@ -196,6 +196,36 @@ function uploadAction(serverUrl, clientAuthKey, appAuthKey, actionName, actionSc
 }
 
 /**
+ * Downloads an action
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param actionName action's name
+ * @param callback function to be called to deal with an action's download
+ */
+function downloadAction(serverUrl, clientAuthKey, appAuthKey, actionName, callback) {
+  return fetch(`${serverUrl}/actions?client_auth_key=${clientAuthKey}&app_auth_key=${appAuthKey}&action_name=${actionName}`).then((response) => {
+    return response.text();
+  }).then((text) => {
+    return callback(text);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
+/**
+ * Deletes an action
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param actionName action's name
+ * @param callback function to deal with the action's deletion
+ */
+function deleteAction(serverUrl, clientAuthKey, appAuthKey, actionName, callback) {
+  return callback({error: "not implemented yet"});
+}
+
+/**
  * List an app's files
  * @param serverUrl server URL
  * @param clientAuthKey client's auth key

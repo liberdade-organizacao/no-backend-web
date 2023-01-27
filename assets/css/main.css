@@ -1,0 +1,28 @@
+body {
+  width: 100%;
+  height: 95vh;
+}
+
+.contents {
+  flex: 1 1 auto;
+  height: 95%;
+  width: 95%;
+  margin: auto;
+  padding: 0;
+}
+
+.contents textarea {
+  font-family: monospace;
+  box-sizing: border-box;
+  height: 95%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.editable {
+  width: 95%;
+  height: 95%;
+  margin: 10px;
+}
+

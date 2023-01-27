@@ -87,6 +87,8 @@ function main() {
 	  for (var i4 = 0; i4 < numberOfActions; i4++) {
 	    var actionName = `L${randomString(5)}.lua`;
 	    var actionScript = DEFAULT_ACTION;
+	    console.log("--- # uploading " + actionName);
+	    console.log(actionScript)
 	    uploadAction(serverUrl, clientAuthKey, appAuthKey, actionName, actionScript, function(actionCreationResult) {
 	      console.log("--- creating action");
 	      console.log(actionCreationResult);
