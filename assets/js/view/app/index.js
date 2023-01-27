@@ -30,32 +30,12 @@ function main() {
   const clientAuthKey = getAuthKey();
 
   // Updating links
+  document.getElementById("actions-link").href = `./actions.html?app_auth_key=${appAuthKey}`;
   document.getElementById("managers-link").href = `./managers.html?app_auth_key=${appAuthKey}`;
 
   // listing users
   // TODO complete me!
   document.getElementById("app-users").innerHTML = "<p>/!\\ MEN AT WORK /!\\</p>";
-
-  // listing actions
-  listAppActions(serverUrl, clientAuthKey, appAuthKey, function(result) {
-    if (!!result.error) {
-      document.getElementById("app-actions").innerHTML = "<p>Failed to get the app's actions</p>";
-      return;
-    }
-
-    if (result["actions"].length === 0) {
-      document.getElementById("app-actions").innerHTML = "<p>No actions yet</p>";
-      return;
-    }
-
-    // TODO list the app's actions
-    document.getElementById("app-actions").innerHTML = "<p>There are actions, just not here</p>";
-  });
-
-  document.getElementById("new-action-button").addEventListener("click", function() {
-    location.href = `./new_action.html?app_auth_key=${appAuthKey}`;
-    return;
-  });
 
   // listing files
   listAppFiles(serverUrl, clientAuthKey, appAuthKey, function(result) {
