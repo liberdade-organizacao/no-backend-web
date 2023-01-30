@@ -5,6 +5,7 @@ function buildActionList(actions, appAuthKey) {
     var action = actions[i];
     var actionName = action["name"];
     var link = `./edit_action.html?app_auth_key=${appAuthKey}&action_name=${actionName}`;
+    // TODO let clients delete actions
     var row = `<tr><td><a href=${link}>${actionName}</a></td><td>Delete</td></tr>`;
     outlet += row;
   }
