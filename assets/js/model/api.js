@@ -222,7 +222,31 @@ function downloadAction(serverUrl, clientAuthKey, appAuthKey, actionName, callba
  * @param callback function to deal with the action's deletion
  */
 function deleteAction(serverUrl, clientAuthKey, appAuthKey, actionName, callback) {
-  return callback({error: "not implemented yet"});
+  return deleteRequest(`${serverUrl}/actions`, {
+    "client_auth_key": clientAuthKey,
+    "app_auth_key": appAuthKey,
+    "action_name": actionName
+  }, callback);
+}
+
+/**
+ * Atemps to rename an action and update its contents
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param oldActionName original action's name
+ * @param newActionName new action's name
+ * @param actionScript action's script
+ * @param callback function to be called to deal with the rename atempt result
+ */
+function replaceAction(serverUrl, clientAuthKey, appAuthKey, oldActionName, newActionName, actionScript, callback) {
+  return deleteAction(serverUrl, clientAuthKey, appAuthKey, oldActionName, function(deletionResult) {
+    if (!!deletionResult.error) {
+      return callback(deletionResult);
+    } else {
+      return uploadAction(serverUrl, clientAuthKey, appAuthKey, newActionName, actionScript, callback);
+    }
+  });
 }
 
 /**

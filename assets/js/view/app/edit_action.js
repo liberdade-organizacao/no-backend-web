@@ -22,6 +22,7 @@ function main() {
   document.getElementById("action-name").innerHTML = (!!actionName)? actionName : "new_action.lua";
 
   // maybe set action contents
+  var actionContents = document.getElementById("action-contents");
   if (!!actionName) {
     downloadAction(serverUrl, clientAuthKey, appAuthKey, actionName, function(result) {
       var contents = DEFAULT_CONTENTS;
@@ -30,19 +31,46 @@ function main() {
       } else if (result.length > 0) {
         contents = result;
       }
-      document.getElementById("action-contents").innerHTML = result;
+      actionContents.innerHTML = result;
     });
   } else {
-    document.getElementById("action-contents").innerHTML = DEFAULT_CONTENTS;
+    actionContents.innerHTML = DEFAULT_CONTENTS;
   }
 
   // setting up save button 
   var saveButton = document.getElementById("save-button");
   saveButton.addEventListener("click", function() {
     const newActionName = document.getElementById("action-name").innerHTML;  
-    console.log(newActionName);
-    // if newActionName !== actionName OR actionName === "": delete old action and upload new action
-    // else: upload action
+    const actionScript = actionContents.innerHTML;
+
+    // validating data
+    if (newActionName === "") {
+      alert("Invalid action name");
+      return;
+    }
+
+    // updating action
+    if ((newActionName !== actionName) && (actionName !== "")) {
+      replaceAction(serverUrl, clientAuthKey, appAuthKey, actionName, newActionName, actionScript, function(result) {
+        if (!!result.error) {
+	  alert("Failed to update action!");
+	  return;
+	}
+
+	location.href = `./actions.html?app_auth_key=${appAuthKey}`;
+	return;
+      });
+    } else {
+      uploadAction(serverUrl, clientAuthKey, appAuthKey, newActionName, actionScript, function(result) {
+        if (!!result.error) {
+	  alert("Failed to upload action");
+	  return;
+	}
+
+	location.href = `./actions.html?app_auth_key=${appAuthKey}`;
+	return;
+      });
+    }
   });
 }
 
