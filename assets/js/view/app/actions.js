@@ -1,3 +1,15 @@
+function deleteActionCallback(appAuthKey, actionName) {
+  deleteAction(getServerUrl(), getAuthKey(), appAuthKey, actionName, function(result) {
+    if (!!result.error) {
+      alert("Failed to delete action!");
+      return;
+    }
+
+    location.reload();
+    return;
+  });
+}
+
 function buildActionList(actions, appAuthKey) {
   var outlet = "<table><tr><th>Action</th><th>Delete?</th></tr>";
 
@@ -5,8 +17,8 @@ function buildActionList(actions, appAuthKey) {
     var action = actions[i];
     var actionName = action["name"];
     var link = `./edit_action.html?app_auth_key=${appAuthKey}&action_name=${actionName}`;
-    // TODO let clients delete actions
-    var row = `<tr><td><a href=${link}>${actionName}</a></td><td>Delete</td></tr>`;
+    var deleteActionButton = `<button onclick="deleteActionCallback('${appAuthKey}','${actionName}')">Delete</button>`;
+    var row = `<tr><td><a href=${link}>${actionName}</a></td><td>${deleteActionButton}</td></tr>`;
     outlet += row;
   }
 
@@ -43,7 +55,7 @@ function main() {
       contents = buildActionList(result, appAuthKey);
     }
 
-    document.getElementById("actions-list").innerHTML = contents;;
+    document.getElementById("actions-list").innerHTML = contents;
   }); 
 }
 
