@@ -40,8 +40,8 @@ function main() {
   // setting up save button 
   var saveButton = document.getElementById("save-button");
   saveButton.addEventListener("click", function() {
-    const newActionName = document.getElementById("action-name").innerHTML;  
-    const actionScript = actionContents.innerHTML;
+    const newActionName = document.getElementById("action-name").innerHTML; 
+    const actionScript = document.getElementById("action-contents").value;
 
     // validating data
     if (newActionName === "") {

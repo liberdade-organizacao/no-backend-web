@@ -191,7 +191,7 @@ function uploadAction(serverUrl, clientAuthKey, appAuthKey, actionName, actionSc
     "client_auth_key": clientAuthKey,
     "app_auth_key": appAuthKey,
     "action_name": actionName,
-    "action_content": actionScript
+    "action_script": actionScript
   }, callback);
 }
 
