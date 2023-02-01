@@ -336,3 +336,34 @@ function deleteApp(serverUrl, clientAuthKey, appAuthKey, callback) {
   }, callback);
 }
 
+/**
+ * Checks if a client is an admin
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param callback function to be called to deal with the call's response
+ */
+function checkIfIsAdmin(serverUrl, clientAuthKey, callback) {
+  // TODO complete me!
+  return callback({error: null});
+}
+
+/**
+ * lets admins list all clients
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param callback function to be called with all clients
+ */
+function adminListClients(serverUrl, clientAuthKey, callback) {
+  return fetch(`${serverUrl}/clients/all`, {
+    headers: {
+      "X-CLIENT-AUTH-KEY": clientAuthKey
+    }
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+

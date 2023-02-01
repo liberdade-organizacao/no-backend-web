@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Backend-as-a-Service Web Interface</title>
+    <link id="pagestyle" rel="stylesheet" href="../assets/css/mini-nord.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <header class="sticky">
+        <a href="../index.html" class="logo">BaaS</a>
+        <a href="../settings.html" class="button">Settings</a>
+    </header>
+
+    <h1 id="app-name">App Name</h1>
+    <ul>
+        <li><a href="./clients.html">Clients</a></li>
+        <li><a href="./apps.html">Apps</a></li>
+        <li><a href="./files.html">Files</a></li>
+    </ul>
+
+    <script src="../assets/js/model/storage.js" charset="utf-8"></script>
+    <script src="../assets/js/model/api.js" charset="utf-8"></script>
+    <script src="../assets/js/view/admin/index.js" charset="utf-8"></script>
+    <script>
+        main()
+    </script>
+</body>
+</html>
