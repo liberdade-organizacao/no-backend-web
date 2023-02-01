@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Backend-as-a-Service Web Interface</title>
+    <link id="pagestyle" rel="stylesheet" href="../assets/css/mini-nord.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <header class="sticky">
+        <a href="../index.html" class="logo">BaaS</a>
+        <a href="../settings.html" class="button">Settings</a>
+    </header>
+
+    <h1>Clients</h1>
+    
+    <h2>Promote to admin</h2>
+    <form><fieldset>
+         <label for="admin-email">Email</label>
+	 <input type="text" name="admin-email" id="admin-email"/>
+	 <br/>
+	 <button type="button" id="promote-button">Promote</button>
+    </fieldset></form>
+
+    <h2>List of Clients</h2>
+    <div id="clients-list">
+        <p>Now loading...</p>
+    </div>
+
+    <script src="../assets/js/model/storage.js" charset="utf-8"></script>
+    <script src="../assets/js/model/api.js" charset="utf-8"></script>
+    <script src="../assets/js/view/admin/clients.js" charset="utf-8"></script>
+    <script>
+        main()
+    </script>
+</body>
+</html>
