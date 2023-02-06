@@ -377,13 +377,33 @@ function adminListClients(serverUrl, clientAuthKey, callback) {
 }
 
 /**
- * lets admins list all clients
+ * lets admins list all apps
  * @param serverUrl server URL
  * @param clientAuthKey client's auth key
  * @param callback function to be called with all apps
  */
 function adminListApps(serverUrl, clientAuthKey, callback) {
   return fetch(`${serverUrl}/apps/all`, {
+    headers: {
+      "X-CLIENT-AUTH-KEY": clientAuthKey
+    }
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
+/**
+ * lets admins list all files
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param callback function to be called with all files
+ */
+function adminListFiles(serverUrl, clientAuthKey, callback) {
+  return fetch(`${serverUrl}/files/all`, {
     headers: {
       "X-CLIENT-AUTH-KEY": clientAuthKey
     }

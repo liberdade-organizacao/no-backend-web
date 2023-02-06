@@ -1,11 +1,12 @@
 function buildFileList(files) {
-  var outlet = "<table><tr><th>File name</th><th>User Email</th><th>Delete?</th></tr>";
+  var outlet = `<p id="file-counter">${files.length} files</p><table><tr><th>Name</th><th>App</th><th>User</th></tr>`;
 
   for (var i = 0; i < files.length; i++) {
     var file = files[i];
-    var filename = file["filepath"].split("/")[2];
-    var userEmail = file["filepath"].split("/")[1];
-    var row = `<tr><td>${filename}</td><td>${userEmail}</td><td>Delete</td></tr>`;
+    var filepath = file["filepath"];
+    var appName = file["app_id"] + " is app id though";
+    var ownerEmail = file["owner_id"] + " is owner user id though";
+    var row = `<tr><td>${filepath}</td><td>${appName}</td><td>${ownerEmail}</td></tr>`;
     outlet += row;
   }
 
@@ -14,33 +15,27 @@ function buildFileList(files) {
 }
 
 function main() {
-  /// VALIDATING ENVIRONMENT
-  if (!isLoggedIn()) {
-    location.href = "../login.html";
-    return;
-  }
-
-  const appAuthKey = getUrlSearchParam("app_auth_key");
-  if (!appAuthKey) {
-    alert("Invalid app auth key!");
-  }
-
-  /// POPULATING PAGE
   const serverUrl = getServerUrl();
-  const clientAuthKey = getAuthKey();
+  const authKey = getAuthKey();
 
-  listAppFiles(serverUrl, clientAuthKey, appAuthKey, function(result) {
-    if (!!result.error) {
-      document.getElementById("app-files").innerHTML = "<p>Failed to get the app's files</p>";
+  checkIfIsAdmin(serverUrl, authKey, function(adminVerificationResult) {
+    if (!!adminVerificationResult.error) {
+      alert("Not enough permissions to visit this page!");
+      location.href = "../index.html";
       return;
     }
 
-    if (result["files"].length === 0) {
-      document.getElementById("app-files").innerHTML = "<p>No files yet</p>";
-      return;
-    }
+    adminListFiles(serverUrl, authKey, function(result) {
+      if (!!result["error"]) {
+        contents = "<p>Failed to list files</p>";
+      } else if (result["files"].length === 0) {
+        contents = "<p>No files yet!</p>";
+      } else {
+        contents = buildFileList(result["files"]);
+      }
 
-    document.getElementById("app-files").innerHTML = buildFileList(result["files"]);
+      document.getElementById("files-list").innerHTML = contents;
+    }); 
   });
 }
 
