@@ -1,24 +1,11 @@
-function deleteActionCallback(appAuthKey, actionName) {
-  deleteAction(getServerUrl(), getAuthKey(), appAuthKey, actionName, function(result) {
-    if (!!result.error) {
-      alert("Failed to delete action!");
-      return;
-    }
+function buildAppList(apps) {
+  var outlet = "<table><tr><th>Name</th><th>Owner email</th></tr>";
 
-    location.reload();
-    return;
-  });
-}
-
-function buildActionList(actions, appAuthKey) {
-  var outlet = "<table><tr><th>Action</th><th>Delete?</th></tr>";
-
-  for (var i = 0; i < actions.length; i++) {
-    var action = actions[i];
-    var actionName = action["name"];
-    var link = `./edit_action.html?app_auth_key=${appAuthKey}&action_name=${actionName}`;
-    var deleteActionButton = `<button onclick="deleteActionCallback('${appAuthKey}','${actionName}')">Delete</button>`;
-    var row = `<tr><td><a href=${link}>${actionName}</a></td><td>${deleteActionButton}</td></tr>`;
+  for (var i = 0; i < apps.length; i++) {
+    var app = apps[i];
+    var appName = app["name"];
+    var ownerEmail = app["owner_id"] + " is their id tho";
+    var row = `<tr><td>${appName}</td><td>${ownerEmail}</td></tr>`;
     outlet += row;
   }
 
@@ -27,35 +14,26 @@ function buildActionList(actions, appAuthKey) {
 }
 
 function main() {
-  /// VALIDATING PARAMETERS
-  if (!isLoggedIn()) {
-    location.href = "../login.html";
-    return;
-  }
-
-  const appAuthKey = getUrlSearchParam("app_auth_key");
-  if (!appAuthKey) {
-    alert("Invalid app auth key!");
-  }
-
-  /// POPULATING PAGE
   const serverUrl = getServerUrl();
-  const clientAuthKey = getAuthKey();
-
-  document.getElementById("new-action-button").href = `./edit_action.html?app_auth_key=${appAuthKey}`;
-
-  listAppActions(getServerUrl(), getAuthKey(), appAuthKey, function(result) {
-    var contents = "<p>I shouldn't be empty but here I am \\_(ツ)_/</p>";
-
-    if (!!result["error"]) {
-      contents = "<p>Failed to list actions</p>";
-    } else if (result.length === 0) {
-      contents = "<p>No actions yet!</p>";
-    } else {
-      contents = buildActionList(result, appAuthKey);
+  const authKey = getAuthKey();
+  checkIfIsAdmin(serverUrl, authKey, function(adminVerificationResult) {
+    if (!!adminVerificationResult.error) {
+      alert("Not enough permissions to visit this page!");
+      location.href = "../index.html";
+      return;
     }
 
-    document.getElementById("actions-list").innerHTML = contents;
-  }); 
+    adminListApps(serverUrl, authKey, function(result) {
+      if (!!result["error"]) {
+        contents = "<p>Failed to list apps</p>";
+      } else if (result["apps"].length === 0) {
+        contents = "<p>No apps yet!</p>";
+      } else {
+        contents = buildAppList(result["apps"]);
+      }
+
+      document.getElementById("apps-list").innerHTML = contents;
+    }); 
+  });
 }
 
