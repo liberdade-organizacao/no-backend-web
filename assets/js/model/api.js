@@ -416,3 +416,31 @@ function adminListFiles(serverUrl, clientAuthKey, callback) {
   });
 }
 
+/**
+ * Promotes a client to admin based on his email
+ * @param serverUrl server URL
+ * @param clientAuthKey promoter's auth key
+ * @param promotedEmail promotee's email
+ * @param callback function to be called to deal with result
+ */
+function promoteToAdmin(serverUrl, clientAuthKey, promotedEmail, callback) {
+  return postRequest(`${serverUrl}/admins`, {
+    "auth_key": clientAuthKey,
+    "email": promotedEmail
+  }, callback);
+}
+
+/**
+ * Demotes a client from admin based on his email
+ * @param serverUrl server URL
+ * @param clientAuthKey demoter's auth key
+ * @param demotedEmail demotee's email
+ * @param callback function to be called to deal with result
+ */
+function demoteFromAdmin(serverUrl, clientAuthKey, demotedEmail, callback) {
+  return deleteRequest(`${serverUrl}/admins`, {
+    "auth_key": clientAuthKey,
+    "email": demotedEmail
+  }, callback);
+}
+

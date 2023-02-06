@@ -13,7 +13,7 @@ function buildClientsTable(clients) {
 }
 
 function main() {
-  /// CONTEXT VALIDATION
+  // verifying context
   if (!isLoggedIn()) {
     location.href = "../login.html";
     return;
@@ -28,7 +28,7 @@ function main() {
       return;
     }
 
-    /// POPULATING PAGE
+    // listing all clients
     adminListClients(serverUrl, clientAuthKey, function (clientsListResult) {
       if (!!clientsListResult.error) {
         alert("Failed to list clients!");
@@ -37,6 +37,42 @@ function main() {
 
       document.getElementById("clients-list").innerHTML = buildClientsTable(clientsListResult["clients"]);
       return;
+    });
+
+    // promoting to admin
+    var promoteAdminButton = document.getElementById("promote-button");
+    promoteAdminButton.addEventListener("click", function() {
+      promoteAdminButton.innerHTML = "Promoting...";
+      var promotedEmail = document.getElementById("admin-email").value;
+      promoteToAdmin(serverUrl, clientAuthKey, promotedEmail, function(result) {
+        if (!!result["error"]) {
+	  alert("Failed to promote to admin");
+	  promoteAdminButton.innerHTML = "Promote";
+	  return;
+	}
+
+	promoteAdminButton.innerHTML = "Promoted!";
+	location.reload();
+	return;
+      });
+    });
+
+    // demoting from admin
+    var demoteAdminButton = document.getElementById("demote-button");
+    demoteAdminButton.addEventListener("click", function() {
+      demoteAdminButton.innerHTML = "Demoting...";
+      var demotedEmail = document.getElementById("admin-email").value;
+      demoteFromAdmin(serverUrl, clientAuthKey, demotedEmail, function(result) {
+        if (!!result["error"]) {
+	  alert("Failed to demote from admin");
+	  demoteAdminButton.innerHTML = "Demote";
+	  return;
+	}
+
+	demoteAdminButton.innerHTML = "Demoted!";
+	location.reload();
+	return;
+      });
     });
   });
 }
