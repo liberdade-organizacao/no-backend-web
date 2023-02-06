@@ -1,11 +1,11 @@
-function buildManagersTable(clients) {
-  var outlet = "<table><tr><th>E-mail</th><th>Role</th></tr>";
+function buildClientsTable(clients) {
+  var outlet = "<table><tr><th>E-mail</th><th>Is admin?</th></tr>";
   
   for (var i = 0; i < clients.length; i++) {
     var client = clients[i];
     var email = client["email"];
-    var role = client["role"];
-    outlet += `<tr><td>${email}</td><td>${role}</td></tr>`;
+    var isAdmin = (client["is_admin"] === "true")? "Yes" : "No";
+    outlet += `<tr><td>${email}</td><td>${isAdmin}</td></tr>`;
   }
 
   outlet += "</table>";
@@ -35,7 +35,8 @@ function main() {
 	return;
       }
 
-      // TODO build table of clients
+      document.getElementById("clients-list").innerHTML = buildClientsTable(clientsListResult["clients"]);
+      return;
     });
   });
 }
