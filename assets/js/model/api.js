@@ -343,8 +343,17 @@ function deleteApp(serverUrl, clientAuthKey, appAuthKey, callback) {
  * @param callback function to be called to deal with the call's response
  */
 function checkIfIsAdmin(serverUrl, clientAuthKey, callback) {
-  // TODO complete me!
-  return callback({error: null});
+  return fetch(`${serverUrl}/admins/check`, {
+    headers: {
+      "X-CLIENT-AUTH-KEY": clientAuthKey
+    }
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
 }
 
 /**
