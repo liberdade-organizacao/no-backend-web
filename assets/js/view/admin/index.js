@@ -1,5 +1,4 @@
 function main() {
-  /// VALIDATING PARAMETERS
   if (!isLoggedIn()) {
     location.href = "../login.html";
     return;

@@ -16,6 +16,12 @@ function buildAppList(apps) {
 function main() {
   const serverUrl = getServerUrl();
   const authKey = getAuthKey();
+
+  if (!isLoggedIn()) {
+    location.href = "../login.html";
+    return;
+  }
+
   checkIfIsAdmin(serverUrl, authKey, function(adminVerificationResult) {
     if (!!adminVerificationResult.error) {
       alert("Not enough permissions to visit this page!");
