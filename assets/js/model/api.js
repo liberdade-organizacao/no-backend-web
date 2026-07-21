@@ -284,14 +284,14 @@ function listAppActions(serverUrl, clientAuthKey, appAuthKey, callback) {
 }
 
 /**
- * List an app's managers
+ * List an app's users
  * @param serverUrl server URL
  * @param clientAuthKey client's auth key
  * @param appAuthKey app's auth key
- * @param callback function to be called to deal with the app's actions
+ * @param callback function to be called to deal with the app's users
  */
-function listAppManagers(serverUrl, clientAuthKey, appAuthKey, callback) {
-  return fetch(`${serverUrl}/apps/clients?client-auth-key=${clientAuthKey}&app_auth_key=${appAuthKey}`).then((response) => {
+function listAppUsers(serverUrl, clientAuthKey, appAuthKey, callback) {
+  return fetch(`${serverUrl}/apps/users?client_auth_key=${clientAuthKey}&app_auth_key=${appAuthKey}`).then((response) => {
     return response.json();
   }).then((data) => {
     return callback(data);
@@ -299,6 +299,8 @@ function listAppManagers(serverUrl, clientAuthKey, appAuthKey, callback) {
     return callback({error: error});
   });
 }
+
+
 
 /**
  * Atempts to invite a manager to an app
