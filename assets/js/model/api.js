@@ -283,6 +283,24 @@ function listAppActions(serverUrl, clientAuthKey, appAuthKey, callback) {
   });
 }
 
+
+/**
+ * List an app's managers
+ * @param serverUrl server URL
+ * @param clientAuthKey client's auth key
+ * @param appAuthKey app's auth key
+ * @param callback function to be called to deal with the app's managers
+ */
+function listAppManagers(serverUrl, clientAuthKey, appAuthKey, callback) {
+  return fetch(`${serverUrl}/apps/clients?client_auth_key=${clientAuthKey}&app_auth_key=${appAuthKey}`).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return callback(data);
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
 /**
  * List an app's users
  * @param serverUrl server URL
@@ -299,7 +317,6 @@ function listAppUsers(serverUrl, clientAuthKey, appAuthKey, callback) {
     return callback({error: error});
   });
 }
-
 
 
 /**
