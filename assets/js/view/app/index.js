@@ -19,6 +19,8 @@ function main() {
   document.getElementById("managers-link").href = `./managers.html?app_auth_key=${appAuthKey}`;
   document.getElementById("files-link").href = `./files.html?app_auth_key=${appAuthKey}`;
 
+    document.getElementById("users-link").href = `./users.html?app_auth_key=${appAuthKey}`;
+
   // listing users
   // TODO complete me!
   document.getElementById("app-users").innerHTML = "<p>/!\\ MEN AT WORK /!\\</p>";
