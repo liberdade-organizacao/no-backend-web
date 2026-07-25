@@ -17,27 +17,22 @@ function main() {
     return;
   }
 
-  const appAuthKey = getUrlSearchParam("app_auth-auth-key"); // Wait, looking at previous pattern in managers.js... it used grad 'app_auth_key' but I had a typo in my thought?
-  // Let's re-check managers.js: const appAuthKey = getUrlSearchParam("app_auth_key");
-  // Okay, correcting here.
+  const appAuthKey = getUrlSearchParam("app_auth_key");
+  const serverUrl = getServerUrl();
+  const clientAuthKey = getAuthKey();
 
-  const actualAppAuthKey = getUrlSearchParam("app_auth_key");
-
-  if (!actualAppAuthKey) {
+  if (!appAuthKey) {
     alert("Invalid app auth key!");
     return;
   }
 
-  const serverUrl = getServerUrl();
-  const clientAuthKey = getAuthKey();
-
-  listAppUsers(serverUrl, clientAuthKey, actualAppAuthKey, function(result) {
+  listAppUsers(serverUrl, clientAuthKey, appAuthKey, function(result) {
     var contents = "<p>No users found for this application.</p>";
 
     if (!!result.error) {
       document.getElementById("app-users").innerHTML = "<p>Failed to get users for this app :(</p>";
-    } else if (0 < result.length) {
-      contents = buildUsersTable(result);
+    } else if (0 < result.users.length) {
+      contents = buildUsersTable(result.users);
     }
     
     document.getElementById("app-users").innerHTML = contents;
