@@ -463,3 +463,26 @@ function demoteFromAdmin(serverUrl, clientAuthKey, demotedEmail, callback) {
   }, callback);
 }
 
+/**
+ * Atemps to delete an app's file.
+ * @param serverUrl the BaaS server URL
+ * @param clientAuthKey the client authentication key/token
+ * @param appAuthKey the application authenticating key/token
+ * @param filename name of the file being deleted
+ * @param callback function called to deal with result or {error: ...}
+ */
+function deleteAppFile(serverUrl, clientAuthKey, appAuthKey, filename, callback) {
+  return fetch(`${serverUrl}/apps/files`, {
+    method: "DELETE",
+    headers: {
+      "x-client-auth-key": clientAuthKey,
+      "x-app-auth-key": appAuthKey,
+      "x-filename": filename
+    }
+  }).then((response) => {
+    return callback({});
+  }).catch((error) => {
+    return callback({error: error});
+  });
+}
+
